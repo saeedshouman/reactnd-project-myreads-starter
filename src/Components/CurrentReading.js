@@ -22,6 +22,8 @@ class CurrentReading extends Component {
           case "none":
             alert(`${book.title} book is removed`);
             break;
+            default:
+              break;
         }
       }
     });

@@ -34,6 +34,8 @@ class AllBooks extends Component {
           case "read":
             alert(`${book.title} book is moved to Read shelf`);
             break;
+          default:
+            break;
         }
       }
     });
