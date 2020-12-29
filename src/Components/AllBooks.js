@@ -5,16 +5,30 @@ import * as BooksAPI from "../BooksAPI";
 class AllBooks extends Component {
   state = {
     books: [],
+    booksHome: [],
   };
-
+  componentDidMount() {
+    BooksAPI.getAll().then((books) => {
+      this.setState(() => ({
+        booksHome: books,
+      }));
+    });
+  }
   onSearch = (event) => {
     const title = event.target.value;
     BooksAPI.search(title).then((booksGet) => {
       !Array.isArray(booksGet)
         ? this.setState({ books: [] })
-        : this.setState(() => ({
-            books: booksGet,
-          }));
+        : booksGet.map((book) => {
+            const bookHome = this.state.booksHome.find((b) => book.id === b.id);
+            if (bookHome) {
+              book.shelf = bookHome.shelf;
+              return book;
+            }
+            book.shelf = "none";
+            return book;
+          });
+      this.setState(() => ({ books: booksGet }));
     });
   };
 
@@ -60,7 +74,7 @@ class AllBooks extends Component {
                         <select
                           id={book.id}
                           onChange={this.onSelect}
-                          value={book.shelf ? book.shelf : "none"}
+                          value={book.shelf}
                         >
                           <option value="move" disabled>
                             Move to...
