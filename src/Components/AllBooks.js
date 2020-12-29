@@ -3,10 +3,12 @@ import { Link } from "react-router-dom";
 import * as BooksAPI from "../BooksAPI";
 
 class AllBooks extends Component {
+  //we need 2 states one for search books and the other for home page' books to compare.
   state = {
     books: [],
     booksHome: [],
   };
+  //get home' books.
   componentDidMount() {
     BooksAPI.getAll().then((books) => {
       this.setState(() => ({
@@ -20,6 +22,7 @@ class AllBooks extends Component {
       !Array.isArray(booksGet)
         ? this.setState({ books: [] })
         : booksGet.map((book) => {
+          //let's compare between the home page' books and the searched one, and link to each shelf.
             const bookHome = this.state.booksHome.find((b) => book.id === b.id);
             if (bookHome) {
               book.shelf = bookHome.shelf;
@@ -31,7 +34,7 @@ class AllBooks extends Component {
       this.setState(() => ({ books: booksGet }));
     });
   };
-
+//update books after adding them to new shelf.
   onSelect = (e) => {
     const bookID = e.target.id;
     const selected = e.target.value;

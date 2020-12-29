@@ -14,6 +14,7 @@ class Home extends Component {
       }));
     });
   }
+  //changing between shelves.
   onSelect = (e) => {
     const bookID = e.target.id;
     const selected = e.target.value;
