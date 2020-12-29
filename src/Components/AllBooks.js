@@ -5,17 +5,21 @@ import * as BooksAPI from "../BooksAPI";
 class AllBooks extends Component {
   state = {
     books: [],
+    booksHome: []
   };
-
+    
+  
   onSearch = (event) => {
     const title = event.target.value;
-    BooksAPI.search(title).then((books) => {
-      !Array.isArray(books)
+    BooksAPI.search(title).then((booksGet) => {
+      !Array.isArray(booksGet)
         ? this.setState({ books: [] })
         : this.setState(() => ({
-            books,
+            books : booksGet,
           }));
     });
+    
+    console.log(this.state.booksHome)
   };
 
   onSelect = (e) => {
@@ -23,21 +27,6 @@ class AllBooks extends Component {
     const selected = e.target.value;
     BooksAPI.get(bookID).then((book) => {
       BooksAPI.update(book, selected);
-      if (selected !== "none") {
-        switch (selected) {
-          case "currentlyReading":
-            alert(`${book.title} book is moved to Currently Reading shelf`);
-            break;
-          case "wantToRead":
-            alert(`${book.title} book is moved to Want To Read shelf`);
-            break;
-          case "read":
-            alert(`${book.title} book is moved to Read shelf`);
-            break;
-          default:
-            break;
-        }
-      }
     });
   };
 
@@ -75,7 +64,7 @@ class AllBooks extends Component {
                         <select
                           id={book.id}
                           onChange={this.onSelect}
-                          value="move"
+                          value={book.shelf ? book.shelf : 'none' }
                         >
                           <option value="move" disabled>
                             Move to...
