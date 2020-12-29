@@ -18,7 +18,7 @@ This is the first project in Udacity React Course "React Developer Nanodegree Pr
 │   └── index.html # DO NOT MODIFY
 │
 ├── Components
-│    ├── AllBooks.css # This is the search page (/search) having a search bar to find books and make │    it  possible for user to add his books under any shelf.
+│    └── AllBooks.css # This is the search page (/search) having a search bar to find books and make │    it  possible for user to add his books under any shelf.
 │ 
 └── src
     ├── App.css # Styles for your app. Feel free to customize this as you desire.
